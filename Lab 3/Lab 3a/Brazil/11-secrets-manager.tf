@@ -6,11 +6,11 @@
 # Parameter Store (SSM Parameters)
 ############################################
 
-# Explanation: Parameter Store is bos’s map—endpoints and config live here for fast recovery.
-resource "aws_ssm_parameter" "bos_db_endpoint_param" {
-  name  = "/bos/db/endpoint"
+# Explanation: Parameter Store is gru’s map—endpoints and config live here for fast recovery.
+resource "aws_ssm_parameter" "gru_db_endpoint_param" {
+  name  = "/gru/db/endpoint"
   type  = "String"
-  value = aws_db_instance.bos_rds01.address
+  value = aws_db_instance.gru_rds01.address
 
   tags = {
     Name = "${local.name_prefix}-param-db-endpoint"
@@ -18,10 +18,10 @@ resource "aws_ssm_parameter" "bos_db_endpoint_param" {
 }
 
 # Explanation: Ports are boring, but even Wookiees need to know which door number to kick in.
-resource "aws_ssm_parameter" "bos_db_port_param" {
-  name  = "/bos/db/port"
+resource "aws_ssm_parameter" "gru_db_port_param" {
+  name  = "/gru/db/port"
   type  = "String"
-  value = tostring(aws_db_instance.bos_rds01.port)
+  value = tostring(aws_db_instance.gru_rds01.port)
 
   tags = {
     Name = "${local.name_prefix}-param-db-port"
@@ -29,8 +29,8 @@ resource "aws_ssm_parameter" "bos_db_port_param" {
 }
 
 # Explanation: DB name is the label on the crate—without it, you’re rummaging in the dark.
-resource "aws_ssm_parameter" "bos_db_name_param" {
-  name  = "/bos/db/name"
+resource "aws_ssm_parameter" "gru_db_name_param" {
+  name  = "/gru/db/name"
   type  = "String"
   value = var.db_name
 
@@ -43,21 +43,21 @@ resource "aws_ssm_parameter" "bos_db_name_param" {
 # Secrets Manager (DB Credentials)
 ############################################
 
-# Explanation: Secrets Manager is bos’s locked holster—credentials go here, not in code.
-resource "aws_secretsmanager_secret" "bos_db_secret01" {
+# Explanation: Secrets Manager is gru’s locked holster—credentials go here, not in code.
+resource "aws_secretsmanager_secret" "gru_db_secret01" {
   name                    = "${local.name_prefix}/rds/mysql"
   recovery_window_in_days = 0
 }
 
 # Explanation: Secret payload—students should align this structure with their app (and support rotation later).
-resource "aws_secretsmanager_secret_version" "bos_db_secret_version01" {
-  secret_id = aws_secretsmanager_secret.bos_db_secret01.id
+resource "aws_secretsmanager_secret_version" "gru_db_secret_version01" {
+  secret_id = aws_secretsmanager_secret.gru_db_secret01.id
 
   secret_string = jsonencode({
     username = var.db_username
     password = var.db_password
-    host     = aws_db_instance.bos_rds01.address
-    port     = aws_db_instance.bos_rds01.port
+    host     = aws_db_instance.gru_rds01.address
+    port     = aws_db_instance.gru_rds01.port
     dbname   = var.db_name
   })
 }

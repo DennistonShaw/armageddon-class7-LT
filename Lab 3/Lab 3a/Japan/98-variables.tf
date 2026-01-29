@@ -187,3 +187,9 @@ variable "cloudfront_acm_cert_arn" {
   type        = string
   default     = ""
 }
+
+### Lab 3
+variable "brazil_vpc_cidr" {
+  type    = string
+  default = "10.55.0.0/16"
+}

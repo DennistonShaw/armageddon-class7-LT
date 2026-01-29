@@ -51,6 +51,17 @@ resource "aws_vpc_security_group_ingress_rule" "edo_rds_mysql" {
   description = "Allow MySQL access only from app tier EC2 instances"
 }
 
+### Lab 3a RDS SG - inbound access from Brazil VPC CIDR
+resource "aws_vpc_security_group_ingress_rule" "gru_to_edo_rds_mysql" {
+  security_group_id = aws_security_group.edo_rds_sg01.id
+  cidr_ipv4         = var.brazil_vpc_cidr
+
+  from_port   = 3306
+  to_port     = 3306
+  ip_protocol = "tcp"
+  description = "Allow MySQL access only from app tier EC2 instances"
+}
+
 
 resource "aws_vpc_security_group_egress_rule" "rds_all_traffic_ipv4" {
   security_group_id = aws_security_group.edo_rds_sg01.id

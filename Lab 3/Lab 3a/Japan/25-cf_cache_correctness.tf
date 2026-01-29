@@ -3,7 +3,7 @@
 ##############################################################
 
 # Explanation: Static files are the easy win—Chewbacca caches them like hyperfuel for speed.
-resource "aws_cloudfront_cache_policy" "bos_cache_static01" {
+resource "aws_cloudfront_cache_policy" "edo_cache_static01" {
   name        = "${var.project_name}-cache-static01"
   comment     = "Aggressive caching for /static/*"
   default_ttl = 86400    # 1 day
@@ -32,7 +32,7 @@ resource "aws_cloudfront_cache_policy" "bos_cache_static01" {
 
 
 # Explanation: APIs are dangerous to cache by accident—Chewbacca disables caching until proven safe.
-resource "aws_cloudfront_cache_policy" "bos_cache_api_disabled01" {
+resource "aws_cloudfront_cache_policy" "edo_cache_api_disabled01" {
   name        = "${var.project_name}-cache-api-disabled01"
   comment     = "Disable caching for /api/* by default"
   default_ttl = 0
@@ -85,7 +85,7 @@ resource "aws_cloudfront_cache_policy" "bos_cache_api_disabled01" {
 
 
 # Explanation: Origins need context—Chewbacca forwards what the app needs without polluting the cache key.
-resource "aws_cloudfront_origin_request_policy" "bos_orp_api01" {
+resource "aws_cloudfront_origin_request_policy" "edo_orp_api01" {
   name    = "${var.project_name}-orp-api01"
   comment = "Forward necessary values for API calls"
 
@@ -106,7 +106,7 @@ resource "aws_cloudfront_origin_request_policy" "bos_orp_api01" {
 
 
 # Explanation: Static origins need almost nothing—Chewbacca forwards minimal values for maximum cache sanity.
-resource "aws_cloudfront_origin_request_policy" "bos_orp_static01" {
+resource "aws_cloudfront_origin_request_policy" "edo_orp_static01" {
   name    = "${var.project_name}-orp-static01"
   comment = "Minimal forwarding for static assets"
 
@@ -120,7 +120,7 @@ resource "aws_cloudfront_origin_request_policy" "bos_orp_static01" {
 ##############################################################
 
 # Explanation: Make caching intent explicit—Chewbacca stamps Cache-Control so humans and CDNs agree.
-resource "aws_cloudfront_response_headers_policy" "bos_rsp_static01" {
+resource "aws_cloudfront_response_headers_policy" "edo_rsp_static01" {
   name    = "${var.project_name}-rsp-static01"
   comment = "Add explicit Cache-Control for static content"
 

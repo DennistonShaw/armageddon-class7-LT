@@ -5,17 +5,17 @@
 ############################################
 
 # Explanation: S3 is the supply depot—without this, your private world starves (updates, artifacts, logs).
-resource "aws_vpc_endpoint" "bos_vpce_s3_gw01" {
-  vpc_id            = aws_vpc.bos_vpc01.id
-  service_name      = "com.amazonaws.${data.aws_region.bos_region01.region}.s3"
+resource "aws_vpc_endpoint" "edo_vpce_s3_gw01" {
+  vpc_id            = aws_vpc.edo_vpc01.id
+  service_name      = "com.amazonaws.${data.aws_region.edo_region01.region}.s3"
   vpc_endpoint_type = "Gateway"
 
   route_table_ids = [
-    aws_route_table.bos_private_rt01.id
+    aws_route_table.edo_private_rt01.id
   ]
 
   tags = {
-    Name = "${local.bos_prefix}-vpce-s3-gw01"
+    Name = "${local.name_prefix}-vpce-s3-gw01"
   }
 }
 
@@ -24,47 +24,47 @@ resource "aws_vpc_endpoint" "bos_vpce_s3_gw01" {
 ############################################
 
 # Explanation: SSM is your Force choke—remote control without SSH, and nobody sees your keys.
-resource "aws_vpc_endpoint" "bos_vpce_ssm01" {
-  vpc_id              = aws_vpc.bos_vpc01.id
-  service_name        = "com.amazonaws.${data.aws_region.bos_region01.region}.ssm"
+resource "aws_vpc_endpoint" "edo_vpce_ssm01" {
+  vpc_id              = aws_vpc.edo_vpc01.id
+  service_name        = "com.amazonaws.${data.aws_region.edo_region01.region}.ssm"
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  subnet_ids         = aws_subnet.bos_private_subnets[*].id
-  security_group_ids = [aws_security_group.bos_vpce_sg01.id]
+  subnet_ids         = aws_subnet.edo_private_subnets[*].id
+  security_group_ids = [aws_security_group.edo_vpce_sg01.id]
 
   tags = {
-    Name = "${local.bos_prefix}-vpce-ssm01"
+    Name = "${local.name_prefix}-vpce-ssm01"
   }
 }
 
 # Explanation: ec2messages is the Wookiee messenger—SSM sessions won’t work without it.
-resource "aws_vpc_endpoint" "bos_vpce_ec2messages01" {
-  vpc_id              = aws_vpc.bos_vpc01.id
-  service_name        = "com.amazonaws.${data.aws_region.bos_region01.region}.ec2messages"
+resource "aws_vpc_endpoint" "edo_vpce_ec2messages01" {
+  vpc_id              = aws_vpc.edo_vpc01.id
+  service_name        = "com.amazonaws.${data.aws_region.edo_region01.region}.ec2messages"
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  subnet_ids         = aws_subnet.bos_private_subnets[*].id
-  security_group_ids = [aws_security_group.bos_vpce_sg01.id]
+  subnet_ids         = aws_subnet.edo_private_subnets[*].id
+  security_group_ids = [aws_security_group.edo_vpce_sg01.id]
 
   tags = {
-    Name = "${local.bos_prefix}-vpce-ec2messages01"
+    Name = "${local.name_prefix}-vpce-ec2messages01"
   }
 }
 
 # Explanation: ssmmessages is the holonet channel—Session Manager needs it to talk back.
-resource "aws_vpc_endpoint" "bos_vpce_ssmmessages01" {
-  vpc_id              = aws_vpc.bos_vpc01.id
-  service_name        = "com.amazonaws.${data.aws_region.bos_region01.region}.ssmmessages"
+resource "aws_vpc_endpoint" "edo_vpce_ssmmessages01" {
+  vpc_id              = aws_vpc.edo_vpc01.id
+  service_name        = "com.amazonaws.${data.aws_region.edo_region01.region}.ssmmessages"
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  subnet_ids         = aws_subnet.bos_private_subnets[*].id
-  security_group_ids = [aws_security_group.bos_vpce_sg01.id]
+  subnet_ids         = aws_subnet.edo_private_subnets[*].id
+  security_group_ids = [aws_security_group.edo_vpce_sg01.id]
 
   tags = {
-    Name = "${local.bos_prefix}-vpce-ssmmessages01"
+    Name = "${local.name_prefix}-vpce-ssmmessages01"
   }
 }
 
@@ -72,18 +72,18 @@ resource "aws_vpc_endpoint" "bos_vpce_ssmmessages01" {
 # VPC Endpoint - CloudWatch Logs (Interface)
 ############################################
 
-# Explanation: CloudWatch Logs is the ship’s black box—bos wants crash data, always.
-resource "aws_vpc_endpoint" "bos_vpce_logs01" {
-  vpc_id              = aws_vpc.bos_vpc01.id
-  service_name        = "com.amazonaws.${data.aws_region.bos_region01.region}.logs"
+# Explanation: CloudWatch Logs is the ship’s black box—edo wants crash data, always.
+resource "aws_vpc_endpoint" "edo_vpce_logs01" {
+  vpc_id              = aws_vpc.edo_vpc01.id
+  service_name        = "com.amazonaws.${data.aws_region.edo_region01.region}.logs"
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  subnet_ids         = aws_subnet.bos_private_subnets[*].id
-  security_group_ids = [aws_security_group.bos_vpce_sg01.id]
+  subnet_ids         = aws_subnet.edo_private_subnets[*].id
+  security_group_ids = [aws_security_group.edo_vpce_sg01.id]
 
   tags = {
-    Name = "${local.bos_prefix}-vpce-logs01"
+    Name = "${local.name_prefix}-vpce-logs01"
   }
 }
 
@@ -91,18 +91,18 @@ resource "aws_vpc_endpoint" "bos_vpce_logs01" {
 # VPC Endpoint - Secrets Manager (Interface)
 ############################################
 
-# Explanation: Secrets Manager is the locked vault—bos doesn’t put passwords on sticky notes.
-resource "aws_vpc_endpoint" "bos_vpce_secrets01" {
-  vpc_id              = aws_vpc.bos_vpc01.id
-  service_name        = "com.amazonaws.${data.aws_region.bos_region01.region}.secretsmanager"
+# Explanation: Secrets Manager is the locked vault—edo doesn’t put passwords on sticky notes.
+resource "aws_vpc_endpoint" "edo_vpce_secrets01" {
+  vpc_id              = aws_vpc.edo_vpc01.id
+  service_name        = "com.amazonaws.${data.aws_region.edo_region01.region}.secretsmanager"
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  subnet_ids         = aws_subnet.bos_private_subnets[*].id
-  security_group_ids = [aws_security_group.bos_vpce_sg01.id]
+  subnet_ids         = aws_subnet.edo_private_subnets[*].id
+  security_group_ids = [aws_security_group.edo_vpce_sg01.id]
 
   tags = {
-    Name = "${local.bos_prefix}-vpce-secrets01"
+    Name = "${local.name_prefix}-vpce-secrets01"
   }
 }
 
@@ -110,17 +110,17 @@ resource "aws_vpc_endpoint" "bos_vpce_secrets01" {
 # Optional: VPC Endpoint - KMS (Interface)
 ############################################
 
-# Explanation: KMS is the encryption kyber crystal—bos prefers locked doors AND locked safes.
-resource "aws_vpc_endpoint" "bos_vpce_kms01" {
-  vpc_id              = aws_vpc.bos_vpc01.id
-  service_name        = "com.amazonaws.${data.aws_region.bos_region01.region}.kms"
+# Explanation: KMS is the encryption kyber crystal—edo prefers locked doors AND locked safes.
+resource "aws_vpc_endpoint" "edo_vpce_kms01" {
+  vpc_id              = aws_vpc.edo_vpc01.id
+  service_name        = "com.amazonaws.${data.aws_region.edo_region01.region}.kms"
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  subnet_ids         = aws_subnet.bos_private_subnets[*].id
-  security_group_ids = [aws_security_group.bos_vpce_sg01.id]
+  subnet_ids         = aws_subnet.edo_private_subnets[*].id
+  security_group_ids = [aws_security_group.edo_vpce_sg01.id]
 
   tags = {
-    Name = "${local.bos_prefix}-vpce-kms01"
+    Name = "${local.name_prefix}-vpce-kms01"
   }
 }

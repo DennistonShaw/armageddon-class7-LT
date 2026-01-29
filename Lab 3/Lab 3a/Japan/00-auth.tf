@@ -6,13 +6,8 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "use1"
+  alias  = "useast1"
   region = "us-east-1"
-}
-
-provider "aws" {
-  alias = "sa_east_1"
-  region = "sa-east-1"
 }
 
 terraform {
@@ -22,6 +17,15 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = ">= 5.0"
+      # configuration_aliases = [ aws.useast1 ]
     }
+  }
+}
+
+terraform {
+  backend "s3" {
+    bucket = "arma-japan-backend-lt1"
+    key    = "01.27.26/terraform.tfstate"
+    region = "ap-northeast-1"
   }
 }

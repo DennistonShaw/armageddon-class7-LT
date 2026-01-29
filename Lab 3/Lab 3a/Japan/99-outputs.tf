@@ -11,9 +11,9 @@ output "edo_private_subnet_ids" {
   value = aws_subnet.edo_private_subnets[*].id
 }
 
-output "edo_ec2_instance_id" {
-  value = aws_instance.edo_ec201_private_bonus.id
-}
+# output "edo_ec2_instance_id" {
+#   value = aws_instance.edo_ec201_private_bonus.id
+# }
 
 output "edo_rds_endpoint" {
   value = aws_db_instance.edo_rds01.address
@@ -46,9 +46,9 @@ output "edo_vpce_s3_id" {
   value = aws_vpc_endpoint.edo_vpce_s3_gw01.id
 }
 
-output "edo_private_ec2_instance_id_bonus" {
-  value = aws_instance.edo_ec201_private_bonus.id
-}
+# output "edo_private_ec2_instance_id_bonus" {
+#   value = aws_instance.edo_ec201_private_bonus.id
+# }
 
 # Explanation: Outputs are the mission coordinates — where to point your browser and your blasters.
 output "edo_alb_dns_name" {
@@ -102,4 +102,10 @@ output "edo_waf_cw_log_group_name" {
 output "current_growl_secret" {
   value     = random_password.edo_origin_header_value01.result
   sensitive = true
+}
+
+# Output for reference (optional)
+output "edo_tgw_id" {
+  value       = aws_ec2_transit_gateway.edo_tgw01.id
+  description = "Tokyo Transit Gateway ID"
 }

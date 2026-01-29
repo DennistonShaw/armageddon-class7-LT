@@ -1,5 +1,5 @@
 # Explanation: The shield generator moves to the edge — CloudFront WAF blocks nonsense before it hits your VPC.
-resource "aws_wafv2_web_acl" "bos_cf_waf01" {
+resource "aws_wafv2_web_acl" "gru_cf_waf01" {
   name  = "${var.project_name}-cf-waf01"
   scope = "CLOUDFRONT"
 

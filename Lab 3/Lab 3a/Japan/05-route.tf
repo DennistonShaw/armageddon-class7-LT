@@ -49,10 +49,10 @@ resource "aws_route_table_association" "edo_private_rta" {
   route_table_id = aws_route_table.edo_private_rt01.id
 }
 
-###########################################################################################################
+##########################################################################################################
 
-# resource "aws_route" "shinjuku_to_sp_route01" {
-#   route_table_id         = aws_route_table.edo_private_rt01.id
-#   destination_cidr_block = "10.55.0.0/16" # Sao Paulo VPC CIDR (students supply)
-#   transit_gateway_id     = aws_ec2_transit_gateway.shinjuku_tgw01.id
-# }
+resource "aws_route" "edo_to_sp_route01" {
+  route_table_id         = aws_route_table.edo_private_rt01.id
+  destination_cidr_block = "10.55.0.0/16" # Sao Paulo VPC CIDR (students supply)
+  transit_gateway_id     = aws_ec2_transit_gateway.edo_tgw01.id
+}

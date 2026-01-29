@@ -26,7 +26,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 REGION = os.environ.get("AWS_REGION", "us-east-1")
-SECRET_ID = os.environ.get("SECRET_ID", "bos/rds/mysql")
+SECRET_ID = os.environ.get("SECRET_ID", "edo/rds/mysql")
 secrets = boto3.client("secretsmanager", region_name=REGION)
 def get_db_creds():
     try:
@@ -187,7 +187,7 @@ Description=EC2 to RDS Notes App
 After=network.target
 [Service]
 WorkingDirectory=/opt/rdsapp
-Environment=SECRET_ID=bos/rds/mysql
+Environment=SECRET_ID=edo/rds/mysql
 ExecStart=/usr/bin/python3 /opt/rdsapp/app.py
 Restart=always
 [Install]
@@ -213,7 +213,7 @@ cat >/opt/aws/amazon-cloudwatch-agent/bin/config.json <<'EOF'
         "collect_list": [
           {
             "file_path": "/opt/rdsapp/*.log",
-            "log_group_name": "/aws/ec2/bos-rds-app",
+            "log_group_name": "/aws/ec2/edo-rds-app",
             "log_stream_name": "{instance_id}"
           }
         ]
